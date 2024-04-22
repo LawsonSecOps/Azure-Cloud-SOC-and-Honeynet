@@ -1,6 +1,6 @@
 # Azure-Cloud-SOC-and-Honeynet
 
-![Cloud Honeynet / SOC](https://i.imgur.com/VGcjyU7.jpg)
+![tinywow_SOC Cloud Honeynet_53814701](https://github.com/LawsonSecOps/Azure-Cloud-SOC-and-Honeynet/assets/167668407/87f05d09-aa17-44ec-b770-5ae24ad77dd4)
 
 ## Introduction
 
