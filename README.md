@@ -4,7 +4,8 @@
 
 ## Introduction
 
-In this project, Rayda Estate, a fictional company, has deployed an Azure-based honeynet open to the Internet to attract  hackers. Log sources from various resources are collected in a Log Analytics workspace, enabling Microsoft Sentinel to generate attack maps, alerts, and incidents. Initial security metrics were measured over 24 hours in the insecure environment. Subsequently, security controls were implemented to fortify the environment, and metrics were measured for another 24 hours. 
+
+In this initiative, KAFFCO ESTATE has implemented an Azure-based honeynet accessible to the Internet to lure hackers. Data logs from diverse origins are aggregated within a Log Analytics workspace, empowering Microsoft Sentinel to craft attack visualizations, issue alerts, and manage incidents. Initial security benchmarks were assessed over a 24-hour period within the vulnerable setup. Following that, security measures were enforced to bolster the system, and metrics were reassessed over another 24-hour span.
 
 The architecture of the honeynet in Azure consists of the following components:
 
@@ -21,45 +22,47 @@ The architecture of the honeynet in Azure consists of the following components:
 
 
 ## Architecture Before Hardening And Implementing Security Controls
-![Architecture Diagram](https://i.imgur.com/1yJ0IJU.jpg)
+![tinywow_remove_text_photo_53820172](https://github.com/LawsonSecOps/Azure-Cloud-SOC-and-Honeynet/assets/167668407/01846e8c-d933-4758-96cd-a03232d37ab3)
 
-Before implementing any security controls, all resources in the honeynet were initially deployed and exposed to the Internet. The Virtual Machines had both their Network Security Groups and built-in firewalls set to allow all traffic. Other resources were deployed with public IP Addresses visible to the Internet, without any private endpoints.
+Prior to enacting any security protocols, all assets within the honeynet were initially set up and exposed to the Internet. The Virtual Machines had both their Network Security Groups and built-in firewalls configured to permit all traffic. Additionally, other resources were deployed with public IP Addresses openly accessible on the Internet, lacking any private endpoints..
 
 ## Architecture After Hardening And Implementing Security Controls
-![Architecture Diagram](https://i.imgur.com/c0cSnfw.jpg)
+![tinywow_soc pic2_53820654](https://github.com/LawsonSecOps/Azure-Cloud-SOC-and-Honeynet/assets/167668407/93395767-b88f-4398-8272-34f6f2e2cfe4)
 
-After implementing security controls, notable changes were made to the network infrastructure. The Network Security Groups were strengthened by blocking ALL traffic, except for communication originating from my admin workstation. Additionally, their built-in firewalls were used to safeguard all other resources and secured them by using Private Endpoints, ensuring a more robust and restricted access environment.
+
+Following the implementation of security measures, significant alterations were introduced to the network infrastructure. Strengthening the Network Security Groups involved the comprehensive blocking of ALL traffic, with the exception of communication originating from my admin workstation. Furthermore, the built-in firewalls were leveraged to protect all remaining resources, securing them through the use of Private Endpoints. This ensured a more fortified and tightly controlled access environment.
 
 
 ## Attack Maps Before Hardening And Implementing Security Controls
 The following metrics were used to query these maps:
-
 - Syslog (Linux Event Logs)
 - SecurityEvent (Windows Event Logs)
 - SecurityAlert (Log Analytics Alerts Triggered)
 - SecurityIncident (Incidents created by Sentinel)
 - AzureNetworkAnalytics_CL (Malicious Flows allowed into our honeynet)
 
-![NSG Allowed Inbound Malicious Flows](https://i.imgur.com/0654REU.jpg)<br>
-![Linux Syslog Auth Failures](https://i.imgur.com/1qidkTm.jpg)<br>
-![Windows RDP/SMB Auth Failures](https://i.imgur.com/GNDKcAy.jpg)<br>
-![MSSQL Auth Failures](https://i.imgur.com/w56RB4X.jpg)
+![Before- Linux-ssh- auth-fail](https://github.com/LawsonSecOps/Azure-Cloud-SOC-and-Honeynet/assets/167668407/872236d4-4559-426c-a76b-c471b7adfc3f)
+![Before-mssql-auth-fail json](https://github.com/LawsonSecOps/Azure-Cloud-SOC-and-Honeynet/assets/167668407/c28d1cd1-81e8-4267-9d5b-ecdb05799d6e)
+![Before-nsg-malicious-allowed-in json](https://github.com/LawsonSecOps/Azure-Cloud-SOC-and-Honeynet/assets/167668407/ed929909-7536-4181-85e8-da4341ec12a6)
+![Before-windows-rdp-auth-fail json](https://github.com/LawsonSecOps/Azure-Cloud-SOC-and-Honeynet/assets/167668407/d642febc-2360-4208-b221-8d54c9c38eed)
+
+
 
 ## Metrics Before Hardening And Implementing Security Controls
 
 The following table shows the metrics we measured in our insecure environment for 24 hours:
-Start Time 6/12/2023 8:44:39 AM
-Stop Time  6/13/2023 8:44:39 AM
+- Start Time 16/04/2024, 06:41:33 AM
+- Stop Time  17/04/2024, 06:41:33 AM
 
 | Metric                   | Count
 | ------------------------ | -----
-| SecurityEvent            | 148544
-| Syslog                   | 576
-| SecurityAlert            | 0 
-| SecurityIncident         | 330
-| AzureNetworkAnalytics_CL | 1478
+| SecurityEvent            | 23571
+| Syslog                   | 368
+| SecurityAlert            | 26
+| SecurityIncident         | 178
+| AzureNetworkAnalytics_CL | 601
 
-The number of alerts was staggering!!! Over 150000 were created in 24 hours. I believe the naming (Rayda Estate) made attackers think it was a real domain.
+The volume of alerts was overwhelming! A total of over 24,000 alerts were generated within a mere 24-hour period. I suspect that the choice of name (KAFFCO Estate) led attackers to perceive it as an authentic domain.
 
 ## Tools And Technologies Used To Harden The environments
 - Microsoft Cloud Security Benchmark
@@ -81,13 +84,13 @@ The number of alerts was staggering!!! Over 150000 were created in 24 hours. I b
 ## Metrics After Hardening And Implementing Security Controls
 
 The following table shows the metrics we measured in our environment for another 24 hours, but after we applied security controls:
-Start Time 6/15/2023, 8:57:44 AM
-Stop Time	 6/16/2023, 8:57:44 AM
+- Start Time 19/04/2024, 14:09:27 PM
+- Stop Time	 20/04/2024, 14:09:27 PM
 
 | Metric                   | Count
 | ------------------------ | -----
-| SecurityEvent            | 4690
-| Syslog                   | 13
+| SecurityEvent            | 1930
+| Syslog                   | 0
 | SecurityAlert            | 0
 | SecurityIncident         | 0
 | AzureNetworkAnalytics_CL | 0
@@ -97,14 +100,16 @@ Rate of Change after the environment was secured
 
 | Metric                        | Change After Security Controls Application
 |-------------------------------| ------------------------------------------
-| SecurityEvents                | 96.84%
-| Syslog                        | 97.74%
+| SecurityEvents                | 91.81%
+| Syslog                        | 100.00%
 | SecurityAlert                 | 100.00%
 | SecurityIncident              | 100.00%
 | AzureNetworkAnalytics_CL      | 100.00%
 
 ## Conclusion
 
-The Implementation of security controls in this Honeynet project in Microsoft Azure resulted in a significant reduction in security events and incidents. This indicates the effectiveness of the applied security measures. It is important to mention that if the network resources were heavily utilized by regular users, there might have been a higher number of security events and alerts during the 24 hours following the implementation of the security controls.
+The integration of security controls within the Honeynet project on Microsoft Azure yielded a notable decrease in security events and incidents, underscoring the efficacy of the implemented security protocols. This reduction serves as a testament to the effectiveness of the measures adopted to safeguard the network infrastructure.
 
-Overall, this project highlights the importance of implementing robust security measures to enhance the security posture of network environments and to reduce their attack surface.
+It's crucial to acknowledge that had the network resources been extensively utilized by regular users, the 24-hour period following the implementation of security controls might have witnessed a higher volume of security events and alerts. This highlights the potential impact of user activity on the security landscape and emphasizes the necessity for comprehensive security measures in dynamic environments.
+
+In essence, this project underscores the criticality of deploying robust security measures to bolster the security posture of network environments and diminish their susceptibility to cyber threats. By mitigating risks and minimizing the attack surface, organizations can better safeguard their assets and maintain operational continuity in the face of evolving security challenges.
